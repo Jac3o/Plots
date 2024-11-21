@@ -1,0 +1,13 @@
+def plot():
+	#plot user
+	print("sigma")
+	sqlselect = "SELECT sessiondate, sessioncalories FROM session WHERE UserID = '1'"
+	rows = query_database(database_file, sqlselect)
+	print (rows)
+	df= pd.DataFrame(rows,columns=['Calories','Date']) #adding the data from the database to be put on the graph
+	print(df)
+	plt.plot(df['Calories'],df['Date'],marker="*",markersize = 18)
+	plt.xlabel('Date')
+	plt.ylabel('Calories')
+	plt.title('Calories burnt per day') #title on the top of the graph
+	plt.show()
