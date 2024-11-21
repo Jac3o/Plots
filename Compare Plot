@@ -1,0 +1,12 @@
+def plotcompare2():
+	sqlselect = "SELECT user.U_name, user.UserID, session.sessioncalories, session.UserID FROM user,session WHERE user.UserID = session.UserID"
+	rows = query_database(database, sqlselect)
+	df = pd.DataFrame (rows, columns = ['User_name','UserID1','Session_Calories', 'UserID2'])
+	print (df)
+	df1 = df.groupby (['User_name'])['Session_Calories'].sum().reset_index()
+	print (df1)
+	plt.bar(df['User_name'], df['Session_Calories'], 0.5, 1)
+	plt.xlabel('User Name')
+	plt.ylabel('Sum of Calories')
+	plt.title('Sum of Calories ')
+	plt.show()
