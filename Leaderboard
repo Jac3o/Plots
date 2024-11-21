@@ -1,0 +1,6 @@
+def leaderboard():
+	#creates a listbox in order of most calories burnt
+	sqlselect = "SELECT U_name, SUM(sessioncalories) as Total FROM session, user WHERE user.UserID = session.UserID GROUP BY user.UserID ORDER BY Total DESC"
+	rows = query_database(database, sqlselect)
+	for i in range(0, len(rows)):
+		listbox.append(rows[i])
