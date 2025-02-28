@@ -1,0 +1,26 @@
+def plot_review():
+    info("info","Plot")
+    lconn = sqlite3.connect(database)
+    c = lconn.cursor()
+
+    # Execute SQL statement to fetch product descriptions and average ratings
+    c.execute("SELECT product_desc, AVG(review_rating) AS Average_Rating FROM product LEFT JOIN review ON Product.productID = review.productID GROUP BY product_desc")
+
+    #fetch data into a pandas DataFrame
+    data = c.fetchall()
+    df = pd.DataFrame(data, columns=["Product_Description", "Average_Rating"])
+    print (df)
+
+   
+
+    #Close the connection
+    lconn.close()
+
+    #plotting
+    plt.bar(df["Product_Description"], df["Average_Rating"], color = "pink")
+    plt.xlabel("Product")
+    plt.ylabel("Average Rating")
+    plt.title("Average Ratings for Each Product")
+    plt.xticks(rotation=0)
+    plt.tight_layout()
+    plt.show()
