@@ -11,3 +11,26 @@ def plot():
 	plt.ylabel('Calories')
 	plt.title('Calories burnt per day') #title on the top of the graph
 	plt.show()
+
+
+
+
+def plot_steps():
+	# plot user steps
+	global user_LoggedIn ## variable needed to know who logged in ##
+	# create dataframe
+	lcon = sqlite3.connect(database_file)
+	c = lcon.cursor()
+
+	c.execute("SELECT Track_NumSteps, Track_Date from tracking where UserID =" +str(user_LoggedIn)+"")
+	#c.execute("SELECT Track_NumSteps, Track_Date from tracking where UserID = '"+user_LoggedIn+"'")
+	#"SELECT * FROM user WHERE User_Username = '"+user_textbox.value+"'"
+	df = pd.DataFrame(c.fetchall(),columns=["Steps", "Tracking_Date"])
+	print(df)
+	#print dataframe
+	plt.plot(df["Tracking_Date"],df["Steps"].astype(int),marker="*",markersize = 18)
+	plt.xlabel("Date")
+	plt.xticks(rotation=0)
+	plt.ylabel("Steps")
+	plt.title("Steps per day")
+	plt.show()
